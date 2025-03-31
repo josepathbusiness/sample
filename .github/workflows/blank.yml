@@ -29,6 +29,7 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    environment: production
     env:
       API_KEY: ${{ vars.SAMPLE_ENV }}
       SECRET_API_KEY: ${{ secrets.SAMPLE_SECRETS }}
