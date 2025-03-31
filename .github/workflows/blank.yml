@@ -40,11 +40,11 @@ jobs:
 
       - name: Debug Variables
         run: |
-            echo "TEST_VAR: $API_KEY"
-            if [ -z "$API_KEY" ]; then
+            echo "TEST_VAR: ${{env.API_KEY}}"
+            if [ -z "${{env.API_KEY}}" ]; then
             echo "TEST_VAR is empty or not being passed correctly."
             else
-              echo "TEST_VAR value is: $API_KEY"
+              echo "TEST_VAR value is: ${{env.API_KEY}}"
             fi
             
       - name: Print selected environment
