@@ -65,8 +65,8 @@ jobs:
           SECRET_API_KEY: ${{ secrets.SAMPLE_SECRETS }} # Access the secret
         run: echo "The secret API key is hidden!"
         
-      - name: environment Variables "$API_KEY"
-        run: echo "environment Variables:- "$API_KEY"
+      - name: environment Variables
+        run: echo "environment Variables:- $API_KEY"
 
-      - name: secrets Variables "$SECRET_API_KEY"
-        run: echo "secrets Variables:- "$SECRET_API_KEY"
+      - name: secrets Variables
+        run: echo "secrets Variables:- $SECRET_API_KEY"
