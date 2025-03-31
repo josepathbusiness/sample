@@ -16,20 +16,20 @@ on:
       environment:
         description: "Select an environment"
         required: false
-        default: "production"
+        default: "dev"
         type: choice
         options:
-          - production
-          - staging
-          - development
-
+          - dev
+          - qa
+          
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  deploy_dev:
+    name: Deploy to dev
+    if: ${{ github.event.inputs.environment == 'dev' }}
     runs-on: ubuntu-latest
-    environment: dev
+    environment:
+      name: dev  # Must match a pre-configured environment in your repo settings
     env:
       ENV_KEY: ${{ vars.ENV }}
       SECRET_API_KEY: ${{ secrets.API_KEY }}
@@ -60,22 +60,58 @@ jobs:
       - name: Print selected environment
         run: echo "Selected environment :- ${{ github.event.inputs.environment }}"
       
-      - name: Deploy to Production
-        if: ${{ github.event.inputs.environment == 'production' }}
+      - name: Deploy to dev
+        if: ${{ github.event.inputs.environment == 'dev' }}
+        run: echo "Deploying to ${{ github.event.inputs.environment }} environment"
+      
+      - name: environment Variables
+        run: echo "environment Variables:- ${{env.ENV_KEY}}"
+
+      - name: secrets Variables
+        run: echo "secrets Variables:- ${{env.SECRET_API_KEY}}"
+  
+  deploy_qa:
+    name: Deploy to qa
+    if: ${{ github.event.inputs.environment == 'qa' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment }}  # Must match a pre-configured environment in your repo settings
+    needs: deploy_dev   # Optional dependency if you want production to wait
+    env:
+      ENV_KEY: ${{ vars.ENV }}
+      SECRET_API_KEY: ${{ secrets.API_KEY }}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      - name: Debug Variables
+        run: |
+            echo "TEST_VAR: ${{env.SECRET_API_KEY}}"
+            if [ -z "${{env.SECRET_API_KEY}}" ]; then
+            echo "TEST_VAR is empty or not being passed correctly."
+            else
+              echo "TEST_VAR value is: ${{env.SECRET_API_KEY}}"
+            fi
+
+      - name: Debug Variables 1
+        run: |
+            echo "TEST_VAR: ${{env.ENV_KEY}}"
+            if [ -z "${{env.ENV_KEY}}" ]; then
+            echo "TEST_VAR is empty or not being passed correctly."
+            else
+              echo "TEST_VAR value is: ${{env.ENV_KEY}}"
+            fi
+            
+      - name: Print selected environment
+        run: echo "Selected environment :- ${{ github.event.inputs.environment }}"
+      
+
+      - name: Deploy to qa
+        if: ${{ github.event.inputs.environment == 'qa' }}
         run: echo "Deploying to ${{ github.event.inputs.environment }} environment"
 
-      - name: Deploy to Staging
-        if: ${{ github.event.inputs.environment == 'staging' }}
-        run: echo "Deploying to ${{ github.event.inputs.environment }} environment"
-
-      - name: Deploy to Development
-        if: ${{ github.event.inputs.environment == 'development' }}
-        run: echo "Deploying to ${{ github.event.inputs.environment }} environment"
-
-
-      - name: Deploy 1 to ${{ github.event.inputs.environment }}
-        if: ${{ github.event.inputs.environment == 'production' || github.event.inputs.environment == 'development' || github.event.inputs.environment == 'staging'}}
-        run: echo "Deploying 1 to ${{ github.event.inputs.environment }} environment"
       
       - name: environment Variables
         run: echo "environment Variables:- ${{env.ENV_KEY}}"
