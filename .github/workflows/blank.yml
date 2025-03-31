@@ -31,8 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev
     env:
-      API_KEY: ${{ vars.API_KEY }}
-      SECRET_API_KEY: ${{ secrets.SEC1 }}
+      ENV_KEY: ${{ vars.ENV }}
+      SECRET_API_KEY: ${{ secrets.API_KEY }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -50,11 +50,11 @@ jobs:
 
       - name: Debug Variables 1
         run: |
-            echo "TEST_VAR: ${{env.API_KEY}}"
-            if [ -z "${{env.API_KEY}}" ]; then
+            echo "TEST_VAR: ${{env.ENV_KEY}}"
+            if [ -z "${{env.ENV_KEY}}" ]; then
             echo "TEST_VAR is empty or not being passed correctly."
             else
-              echo "TEST_VAR value is: ${{env.API_KEY}}"
+              echo "TEST_VAR value is: ${{env.ENV_KEY}}"
             fi
             
       - name: Print selected environment
@@ -78,7 +78,7 @@ jobs:
         run: echo "Deploying 1 to ${{ github.event.inputs.environment }} environment"
       
       - name: environment Variables
-        run: echo "environment Variables:- ${{env.API_KEY}}"
+        run: echo "environment Variables:- ${{env.ENV_KEY}}"
 
       - name: secrets Variables
         run: echo "secrets Variables:- ${{env.SECRET_API_KEY}}"
