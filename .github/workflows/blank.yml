@@ -67,25 +67,8 @@ jobs:
         if: ${{ github.event.inputs.environment == 'production' || github.event.inputs.environment == 'development' || github.event.inputs.environment == 'staging'}}
         run: echo "Deploying 1 to ${{ github.event.inputs.environment }} environment"
       
-      - name: Access Environment Variable
-        env:
-          API_KEYs: ${{ vars.SAMPLE_ENV }} # Access the environment variable
-        run: echo "The API_KEY is $API_KEYs"
-
-      - name: Access Secret
-        env:
-          SECRET_API_KEYs: ${{ secrets.SAMPLE_SECRETS }} # Access the secret
-        run: echo "The secret API key :-  $SECRET_API_KEYs is hidden!"
-        
       - name: environment Variables
         run: echo "environment Variables:- $API_KEY"
 
       - name: secrets Variables
         run: echo "secrets Variables:- $SECRET_API_KEY"
-
-
-      - name: environment Variables 1
-        run: echo "environment Variables:- $API_KEYs"
-
-      - name: secrets Variables 1
-        run: echo "secrets Variables:- $SECRET_API_KEYs"     
