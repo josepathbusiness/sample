@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     env:
-      API_KEY: ${{ vars.SAMPLE_ENV }}
+      API_KEY: ${{ vars.API_KEY }}
       SECRET_API_KEY: ${{ secrets.SAMPLE_SECRETS }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
