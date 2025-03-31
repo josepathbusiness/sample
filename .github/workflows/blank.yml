@@ -55,3 +55,5 @@ jobs:
         if: ${{ github.event.inputs.environment == 'production' || github.event.inputs.environment == 'development' || github.event.inputs.environment == 'staging'}}
         run: echo "Deploying 1 to ${{ github.event.inputs.environment }} environment"
 
+      - name: environment Variables "$SAMPLE_VAR"
+        run: echo "environment Variables:- "$SAMPLE_VAR"
