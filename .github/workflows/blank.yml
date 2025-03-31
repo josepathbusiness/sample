@@ -29,6 +29,9 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    env:
+      API_KEY: ${{ vars.SAMPLE_ENV }}
+      SECRET_API_KEY: ${{ secrets.SAMPLE_SECRETS }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -57,16 +60,23 @@ jobs:
       
       - name: Access Environment Variable
         env:
-          API_KEY: ${{ vars.SAMPLE_ENV }} # Access the environment variable
-        run: echo "The API_KEY is $API_KEY"
+          API_KEYs: ${{ vars.SAMPLE_ENV }} # Access the environment variable
+        run: echo "The API_KEY is $API_KEYs"
 
       - name: Access Secret
         env:
-          SECRET_API_KEY: ${{ secrets.SAMPLE_SECRETS }} # Access the secret
-        run: echo "The secret API key is hidden!"
+          SECRET_API_KEYs: ${{ secrets.SAMPLE_SECRETS }} # Access the secret
+        run: echo "The secret API key :-  $SECRET_API_KEYs is hidden!"
         
       - name: environment Variables
         run: echo "environment Variables:- $API_KEY"
 
       - name: secrets Variables
         run: echo "secrets Variables:- $SECRET_API_KEY"
+
+
+      - name: environment Variables 1
+        run: echo "environment Variables:- $API_KEYs"
+
+      - name: secrets Variables 1
+        run: echo "secrets Variables:- $SECRET_API_KEYs"     
