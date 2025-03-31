@@ -35,12 +35,18 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, ${{ github.event.inputs.environment }}!
+      - name: Print selected environment
+        run: echo "Selected environment :- ${{ github.event.inputs.environment }}"
+      
+      - name: Deploy to Production
+        if: ${{ github.event.inputs.environment == 'production' }}
+        run: echo "Deploying to ${{ github.event.inputs.environment }} environment"
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - name: Deploy to Staging
+        if: ${{ github.event.inputs.environment == 'staging' }}
+        run: echo "Deploying to ${{ github.event.inputs.environment }} environment"
+
+      - name: Deploy to Development
+        if: ${{ github.event.inputs.environment == 'development' }}
+        run: echo "Deploying to ${{ github.event.inputs.environment }} environment"
+
