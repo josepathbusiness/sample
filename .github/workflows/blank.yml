@@ -38,6 +38,15 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
+      - name: Debug Variables
+        run: |
+            echo "TEST_VAR: $API_KEY"
+            if [ -z "$API_KEY" ]; then
+            echo "TEST_VAR is empty or not being passed correctly."
+            else
+              echo "TEST_VAR value is: $API_KEY"
+            fi
+            
       - name: Print selected environment
         run: echo "Selected environment :- ${{ github.event.inputs.environment }}"
       
