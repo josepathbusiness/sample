@@ -76,7 +76,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.event.inputs.environment }}  # Must match a pre-configured environment in your repo settings
-    needs: deploy_dev   # Optional dependency if you want production to wait
+    # needs: deploy_dev   # Optional dependency if you want production to wait
     env:
       ENV_KEY: ${{ vars.ENV }}
       SECRET_API_KEY: ${{ secrets.API_KEY }}
